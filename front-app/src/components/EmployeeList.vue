@@ -1,23 +1,23 @@
 <template>
   <div>
-    <button @click="showAddModal">Add</button>
     <table>
       <tr>
-        <th>Last name</th>
         <th>First name</th>
+        <th>Last name</th>
         <th>Salary</th>
         <th>Action</th>
       </tr>
       <tr v-for="employee in employees" :key="employee.id">
         <td>{{ employee.first_name }}</td>
         <td>{{ employee.last_name }}</td>
-        <td>{{ employee.salary }}</td>
+        <td>${{ employee.salary | formatCurrency }}</td>
         <td>
           <button @click="showEditModal(employee)">Edit</button>
           <button @click="deleteEmployee(employee.id)">Delete</button>
         </td>
       </tr>
     </table>
+    <button @click="showAddModal">Add</button>
 
     <EmployeeModal
       ref="employeeModal"
@@ -31,6 +31,12 @@
 <script>
 import EmployeeModal from "./EmployeeModal.vue";
 import apiHelper from "../apiHelper.js";
+import Vue from "vue";
+
+Vue.filter("formatCurrency", function (value) {
+  if (!value) return "";
+  return value.toLocaleString();
+});
 
 export default {
   components: {

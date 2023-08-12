@@ -7,6 +7,8 @@
 $ docker-compose build --no-cache
 $ docker-compose up
 $ docker-compose down
+# build without no-cache and up
+$ docker-compose build --no-cache && docker-compose up
 ```
 
 # Sample Data insert
