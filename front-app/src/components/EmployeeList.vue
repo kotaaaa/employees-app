@@ -1,16 +1,12 @@
 <template>
   <div>
+    <div class="table-title">
+      <h1 class="table-header">Employees</h1>
+      <td class="text-right">
+        <button @click="showAddModal" class="table-button">Add</button>
+      </td>
+    </div>
     <table>
-      <tr>
-        <td>
-          <h1>Employees</h1>
-        </td>
-        <td></td>
-        <td></td>
-        <td>
-          <button @click="showAddModal">Add</button>
-        </td>
-      </tr>
       <tr>
         <th>First name</th>
         <th>Last name</th>
@@ -41,11 +37,19 @@
           <span v-else>${{ employee.salary | formatCurrency }}</span>
         </td>
         <td>
-          <button v-if="editingEmployeeId === employee.id" @click="endEdit">
+          <button
+            v-if="editingEmployeeId === employee.id"
+            @click="endEdit"
+            class="table-button"
+          >
             Save
           </button>
-          <button v-else @click="startEdit(employee.id)">Edit</button>
-          <button @click="deleteEmployee(employee.id)">Delete</button>
+          <button v-else @click="startEdit(employee.id)" class="table-button">
+            Edit
+          </button>
+          <button @click="deleteEmployee(employee.id)" class="table-button">
+            Delete
+          </button>
         </td>
       </tr>
       <EmployeeModal
@@ -129,7 +133,7 @@ export default {
 
 <style scoped>
 table {
-  width: 100%;
+  width: 80%;
   table-layout: fixed;
 }
 
@@ -138,9 +142,9 @@ table td {
   overflow: hidden;
 }
 
-table input {
-  width: 100%;
+/* table input {
+  width: 80%;
   border: none;
   box-sizing: border-box;
-}
+} */
 </style>

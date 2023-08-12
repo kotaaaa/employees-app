@@ -4,8 +4,8 @@
     <td><input v-model="localEmployee.last_name" /></td>
     <td><input v-model="localEmployee.salary" type="number" /></td>
     <td>
-      <button @click="save">Save</button>
-      <button @click="close">Close</button>
+      <button @click="save" class="table-button">Save</button>
+      <button @click="close" class="table-button">Close</button>
     </td>
   </tr>
 </template>
