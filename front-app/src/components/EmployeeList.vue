@@ -2,29 +2,59 @@
   <div>
     <table>
       <tr>
+        <td>
+          <h1>Employees</h1>
+        </td>
+        <td></td>
+        <td></td>
+        <td>
+          <button @click="showAddModal">Add</button>
+        </td>
+      </tr>
+      <tr>
         <th>First name</th>
         <th>Last name</th>
         <th>Salary</th>
         <th>Action</th>
       </tr>
       <tr v-for="employee in employees" :key="employee.id">
-        <td>{{ employee.first_name }}</td>
-        <td>{{ employee.last_name }}</td>
-        <td>${{ employee.salary | formatCurrency }}</td>
         <td>
-          <button @click="showEditModal(employee)">Edit</button>
+          <input
+            v-if="editingEmployeeId === employee.id"
+            v-model="employee.first_name"
+          />
+          <span v-else>{{ employee.first_name }}</span>
+        </td>
+        <td>
+          <input
+            v-if="editingEmployeeId === employee.id"
+            v-model="employee.last_name"
+          />
+          <span v-else>{{ employee.last_name }}</span>
+        </td>
+        <td>
+          <input
+            v-if="editingEmployeeId === employee.id"
+            v-model.number="employee.salary"
+            type="number"
+          />
+          <span v-else>${{ employee.salary | formatCurrency }}</span>
+        </td>
+        <td>
+          <button v-if="editingEmployeeId === employee.id" @click="endEdit">
+            Save
+          </button>
+          <button v-else @click="startEdit(employee.id)">Edit</button>
           <button @click="deleteEmployee(employee.id)">Delete</button>
         </td>
       </tr>
+      <EmployeeModal
+        ref="employeeModal"
+        :employee="currentEmployee"
+        @close="closeModal"
+        @refresh="getEmployees"
+      />
     </table>
-    <button @click="showAddModal">Add</button>
-
-    <EmployeeModal
-      ref="employeeModal"
-      :employee="currentEmployee"
-      @close="closeModal"
-      @refresh="getEmployees"
-    />
   </div>
 </template>
 
@@ -46,18 +76,37 @@ export default {
     return {
       employees: [],
       currentEmployee: null,
+      editingEmployeeId: null,
     };
   },
   methods: {
     async getEmployees() {
       this.employees = await apiHelper.fetchData("/api/employees");
     },
-    showAddModal() {
-      this.currentEmployee = null;
-      this.$refs.employeeModal.open();
+    startEdit(employeeId) {
+      this.$refs.employeeModal.close();
+      this.editingEmployeeId = employeeId;
     },
-    showEditModal(employee) {
-      this.currentEmployee = employee;
+    async endEdit() {
+      const editedEmployee = this.employees.find(
+        (emp) => emp.id === this.editingEmployeeId
+      );
+
+      try {
+        await apiHelper.putData(
+          `/api/employees/${this.editingEmployeeId}`,
+          JSON.stringify(editedEmployee)
+        );
+        this.editingEmployeeId = null; // End of edit mode
+        this.getEmployees(); // get latest data from API
+      } catch (error) {
+        console.error("Error updating employee:", error);
+      }
+    },
+    showAddModal() {
+      this.getEmployees(); // get latest data from API
+      this.currentEmployee = null;
+      this.editingEmployeeId = null; // End of edit mode
       this.$refs.employeeModal.open();
     },
     closeModal() {
@@ -77,3 +126,21 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+table td {
+  width: 25%;
+  overflow: hidden;
+}
+
+table input {
+  width: 100%;
+  border: none;
+  box-sizing: border-box;
+}
+</style>

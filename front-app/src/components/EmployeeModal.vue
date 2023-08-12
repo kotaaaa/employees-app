@@ -1,15 +1,13 @@
 <template>
-  <div v-if="visible" class="modal">
-    <div>
-      <label>First Name: <input v-model="localEmployee.first_name" /></label>
-      <label>Last Name: <input v-model="localEmployee.last_name" /></label>
-      <label
-        >Salary: <input v-model="localEmployee.salary" type="number"
-      /></label>
+  <tr v-if="visible" class="modal">
+    <td><input v-model="localEmployee.first_name" /></td>
+    <td><input v-model="localEmployee.last_name" /></td>
+    <td><input v-model="localEmployee.salary" type="number" /></td>
+    <td>
       <button @click="save">Save</button>
       <button @click="close">Close</button>
-    </div>
-  </div>
+    </td>
+  </tr>
 </template>
 
 <script>
@@ -44,17 +42,17 @@ export default {
       this.visible = false;
     },
     async save() {
-      if (this.localEmployee.id) {
-        await apiHelper.putData(
-          `/api/employees/${this.localEmployee.id}`,
-          JSON.stringify(this.localEmployee)
-        );
-      } else {
-        await apiHelper.postData(
-          "/api/employees",
-          JSON.stringify(this.localEmployee)
-        );
-      }
+      // if (this.localEmployee.id) {
+      //   await apiHelper.putData(
+      //     `/api/employees/${this.localEmployee.id}`,
+      //     JSON.stringify(this.localEmployee)
+      //   );
+      // } else {
+      await apiHelper.postData(
+        "/api/employees",
+        JSON.stringify(this.localEmployee)
+      );
+      // }
       this.$emit("refresh");
       this.close();
     },
