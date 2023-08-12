@@ -42,17 +42,10 @@ export default {
       this.visible = false;
     },
     async save() {
-      // if (this.localEmployee.id) {
-      //   await apiHelper.putData(
-      //     `/api/employees/${this.localEmployee.id}`,
-      //     JSON.stringify(this.localEmployee)
-      //   );
-      // } else {
       await apiHelper.postData(
         "/api/employees",
         JSON.stringify(this.localEmployee)
       );
-      // }
       this.$emit("refresh");
       this.close();
     },
