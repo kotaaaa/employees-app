@@ -84,3 +84,7 @@ $ cd front-app
 $ yarn install
 $ yarn serve
 ```
+
+## System Architecture
+
+![](./tech-overview.drawio.svg)
