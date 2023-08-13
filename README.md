@@ -18,28 +18,30 @@
 - docker-compose
 
 ```
+# For Your Information
 $ docker-compose version
 Docker Compose version v2.15.1
 ```
 
-# Run with docker-compose
+# 1, Run with docker-compose
 
 ```Shell
 # You can run whole app with just one command
 $ docker-compose build --no-cache && docker-compose up
-# You can run commands one by one.
-$ docker-compose build --no-cache
-$ docker-compose up
-$ docker-compose down
 ```
 
-# Sample Data insert Manually (In case it is not registered automatically)
+# 2, Sample Data insert Manually
 
 ```Shell
 $ docker-compose exec employees-app poetry run python -m api.migrate_db
 ```
 
-# Go to mysql CLI
+Then, you can check how the application works.
+Go to http://localhost:8080/
+
+# Another useful command
+
+## Go to mysql CLI
 
 ```Shell
 $ docker-compose exec db mysql employees
@@ -57,21 +59,24 @@ mysql> desc employees;
 4 rows in set (0.02 sec)
 ```
 
-# Run Unit Test (FastAPI)
+## Run Unit Test (FastAPI)
 
 ```Shell
 $ docker-compose run --entrypoint "poetry run pytest --asyncio-mode=auto" employees-app
 ```
 
-# Swagger UI (You can check API Specification here)
+## Swagger UI (You can check API Specification here)
 
 ```Shell
 http://localhost:8000/docs
 ```
 
-# Run Frontend(Vue.js) mannually
+## Run Frontend(Vue.js) mannually
+
+Node version: 16.5.0
 
 ```
+$ cd front-app
 $ yarn install
 $ yarn serve
 ```
