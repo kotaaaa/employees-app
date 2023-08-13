@@ -1,12 +1,8 @@
-# Take-home Assignment (Full Stack)
+[![Black - Python Formatter](https://img.shields.io/badge/code%20style-black-black)](https://github.com/psf/black)
 
-### Goal:
+# Employees Management App
 
-- Create an Employee Table like the one in the image below.
-- Use any front-end framework (Angular, React, Vue, ect...) or CSS library to accomplish this.
-- Implement the back-end API with the back-end framework of your choice, and a SQL database
-
-![](example.png)
+![](demo.png)
 
 ### Functional Requirements:
 
@@ -16,14 +12,66 @@
 - The ability to delete an employee
 - The ability to create a new employee
 
-### Technical Guidelines:
+# prerequisite
 
-- Structure your application and components in a modular/reusable way
-- Commit code with useful and informative comments
-- Your application doesn't have to use the data.json file directly, but have a SQL script to initialize your database with data found in that file
-- Implement API code to read and write to a SQL database
-- Styling: CSS or SCSS or SASS can be used, whichever you prefer (can use popular UI frameworks like Bootstrap as well)
+- Docker
+- docker-compose
 
-### Questions?
+```
+$ docker-compose version
+Docker Compose version v2.15.1
+```
 
-Please reach out to me with any questions
+# Run with docker-compose
+
+```Shell
+# You can run whole app with just one command
+$ docker-compose build --no-cache && docker-compose up
+# You can run commands one by one.
+$ docker-compose build --no-cache
+$ docker-compose up
+$ docker-compose down
+```
+
+# Sample Data insert Manually (In case it is not registered automatically)
+
+```Shell
+$ docker-compose exec employees-app poetry run python -m api.migrate_db
+```
+
+# Go to mysql CLI
+
+```Shell
+$ docker-compose exec db mysql employees
+# to set encoding utf8
+mysql> CHARSET utf8;
+mysql> desc employees;
++------------+---------------+------+-----+---------+----------------+
+| Field      | Type          | Null | Key | Default | Extra          |
++------------+---------------+------+-----+---------+----------------+
+| id         | int           | NO   | PRI | NULL    | auto_increment |
+| first_name | varchar(1024) | YES  |     | NULL    |                |
+| last_name  | varchar(1024) | YES  |     | NULL    |                |
+| salary     | int           | YES  |     | NULL    |                |
++------------+---------------+------+-----+---------+----------------+
+4 rows in set (0.02 sec)
+```
+
+# Run Unit Test (FastAPI)
+
+```Shell
+$ docker-compose run --entrypoint "poetry run pytest --asyncio-mode=auto" employees-app
+```
+
+# Swagger UI (You can check API Specification here)
+
+```Shell
+http://localhost:8000/docs
+```
+
+# Run Frontend(Vue.js) mannually
+
+```
+$ yarn install
+$ yarn serve
+```
