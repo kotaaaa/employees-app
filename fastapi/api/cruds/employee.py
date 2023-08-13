@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 import api.models.employee as employee_model
 import api.schemas.employee as employee_schema
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 from sqlalchemy import select
 from sqlalchemy.engine import Result
@@ -11,6 +11,15 @@ from sqlalchemy.engine import Result
 async def create_employee(
     db: AsyncSession, employee_create: employee_schema.EmployeeCreate
 ) -> employee_model.Employee:
+    """Create employee records to DB
+
+    Args:
+        db (AsyncSession): db session
+        employee_create (employee_schema.EmployeeCreate): Employee Object
+
+    Returns:
+        employee_model.Employee: Created Employee Object
+    """
     employee = employee_model.Employee(**employee_create.dict())
     db.add(employee)
     await db.commit()
@@ -19,6 +28,14 @@ async def create_employee(
 
 
 async def get_employees(db: AsyncSession) -> List[Tuple[int, str, str, int]]:
+    """Retrieve employees infomation from DB
+
+    Args:
+        db (AsyncSession): db session
+
+    Returns:
+        List[Tuple[int, str, str, int]]: List of Employee Objects
+    """
     result: Result = await db.execute(
         select(
             employee_model.Employee.id,
@@ -30,12 +47,18 @@ async def get_employees(db: AsyncSession) -> List[Tuple[int, str, str, int]]:
     return result.all()
 
 
-from typing import List, Tuple, Optional
-
-
 async def get_employee(
     db: AsyncSession, employee_id: int
 ) -> Optional[employee_model.Employee]:
+    """Retrieve single employee infomation from DB
+
+    Args:
+        db (AsyncSession): db session
+        employee_id (int): employee_id that you search
+
+    Returns:
+        Optional[employee_model.Employee]: Optional object of Employee
+    """
     result: Result = await db.execute(
         select(employee_model.Employee).filter(
             employee_model.Employee.id == employee_id
@@ -52,6 +75,16 @@ async def update_employee(
     employee_create: employee_schema.EmployeeCreate,
     original: employee_model.Employee,
 ) -> employee_model.Employee:
+    """Update specific employee's information
+
+    Args:
+        db (AsyncSession): db session
+        employee_create (employee_schema.EmployeeCreate): new employee data
+        original (employee_model.Employee): old employee's data
+
+    Returns:
+        employee_model.Employee: updated employee data
+    """
     original.first_name = employee_create.first_name
     original.last_name = employee_create.last_name
     original.salary = employee_create.salary
@@ -62,6 +95,15 @@ async def update_employee(
 
 
 async def delete_employee(db: AsyncSession, original: employee_model.Employee) -> None:
+    """Delete specific employee's record
+
+    Args:
+        db (AsyncSession): db session
+        original (employee_model.Employee): old employee's data
+
+    Returns:
+        Dict: Dict key is status
+    """
     await db.delete(original)
     await db.commit()
-    return {"status": True}  # TODO ERROR handling
+    return {"status": True}

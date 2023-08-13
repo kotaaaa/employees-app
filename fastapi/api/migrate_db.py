@@ -26,6 +26,7 @@ def get_db():
 
 
 def reset_database():
+    """Initiarize Database"""
     db = next(get_db())
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)

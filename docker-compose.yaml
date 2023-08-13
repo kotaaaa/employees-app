@@ -1,25 +1,25 @@
 version: '3'
 services:
-  web:
+  web: # Vue.js front app
     build: ./front-app
     image: employee-front-app/vue3
     container_name: 'employee-front-app'
     ports:
-      - '8080:8080'
-  employees-app:
+      - '8080:8080' # Connect port 8080 on the host machine to port 8080 in docker
+  employees-app: # fast-api
     build: ./fastapi
     volumes:
       - ./fastapi/.dockervenv:/src/.venv
       - ./fastapi:/src
     ports:
       - 8000:8000  # Connect port 8000 on the host machine to port 8000 in docker
-  db:
+  db: 
     image: mysql:8.0
     platform: linux/x86_64  # In case M1 Mac
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'  # Connect port 8000 on the host machine to port 8000 in docker
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'  
       MYSQL_DATABASE: 'employees'  # Set up employees as initial database
-      TZ: 'Asia/Tokyo'  # Set time zone to JST
+      TZ: 'America/Vancouver'  
     volumes:
       - mysql_data:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password  # In MySQL 8.0, the default is "caching_sha2_password", which is not supported by the driver.

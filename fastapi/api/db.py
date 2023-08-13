@@ -12,5 +12,6 @@ Base = declarative_base()
 
 
 async def get_db():
+    """Get connection to DB"""
     async with async_session() as session:
         yield session
