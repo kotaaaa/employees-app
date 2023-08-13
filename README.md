@@ -1,6 +1,6 @@
 [![Black - Python Formatter](https://img.shields.io/badge/code%20style-black-black)](https://github.com/psf/black)
 
-# Employees Management App
+# Employee Management App
 
 ![](demo.png)
 
@@ -23,14 +23,16 @@ $ docker-compose version
 Docker Compose version v2.15.1
 ```
 
-# 1, Run with docker-compose
+# How to run locally
+
+## 1, Run with docker-compose
 
 ```Shell
 # You can run whole app with just one command
 $ docker-compose build --no-cache && docker-compose up
 ```
 
-# 2, Sample Data insert Manually
+## 2, Sample Data insert Manually
 
 ```Shell
 $ docker-compose exec employees-app poetry run python -m api.migrate_db
