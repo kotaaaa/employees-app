@@ -141,10 +141,4 @@ table td {
   width: 25%;
   overflow: hidden;
 }
-
-/* table input {
-  width: 80%;
-  border: none;
-  box-sizing: border-box;
-} */
 </style>

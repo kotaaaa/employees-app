@@ -4,6 +4,7 @@ from api.routers import employee
 
 app = FastAPI()
 
+# Accept CORS Error to run app locally.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:8080"],  # Vue.js server's origin
