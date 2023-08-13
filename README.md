@@ -34,6 +34,8 @@ $ docker-compose build --no-cache && docker-compose up
 
 ## 2, Sample Data insert Manually
 
+Open another terminal then,
+
 ```Shell
 $ docker-compose exec employees-app poetry run python -m api.migrate_db
 ```
