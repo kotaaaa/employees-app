@@ -9,7 +9,7 @@ services:
   employees-app: # fast-api
     build: ./fastapi
     volumes:
-      - ./fastapi/.dockervenv:/src/.venv
+      # - ./fastapi/.dockervenv:/src/.venv
       - ./fastapi:/src
     ports:
       - 8000:8000  # Connect port 8000 on the host machine to port 8000 in docker
