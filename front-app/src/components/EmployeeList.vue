@@ -54,7 +54,6 @@
       </tr>
       <EmployeeModal
         ref="employeeModal"
-        :employee="currentEmployee"
         @close="closeModal"
         @refresh="getEmployees"
       />
@@ -79,7 +78,6 @@ export default {
   data() {
     return {
       employees: [],
-      currentEmployee: null,
       editingEmployeeId: null,
     };
   },
@@ -109,7 +107,6 @@ export default {
     },
     showAddModal() {
       this.getEmployees(); // get latest data from API
-      this.currentEmployee = null;
       this.editingEmployeeId = null; // End of edit mode
       this.$refs.employeeModal.open();
     },

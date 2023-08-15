@@ -14,25 +14,11 @@
 import apiHelper from "../apiHelper.js";
 
 export default {
-  props: {
-    employee: {
-      type: Object,
-      default: null,
-    },
-  },
   data() {
     return {
       localEmployee: {},
       visible: false,
     };
-  },
-  watch: {
-    employee: {
-      handler(value) {
-        this.localEmployee = { ...value };
-      },
-      immediate: true,
-    },
   },
   methods: {
     open() {
