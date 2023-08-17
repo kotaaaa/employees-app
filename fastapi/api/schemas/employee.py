@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 class EmployeeBase(BaseModel):
     first_name: Optional[str] = Field(None, example="Mike")
     last_name: Optional[str] = Field(None, example="Trout")
+    job_title: Optional[str] = Field(None, example="CEO")
     salary: Optional[int] = Field(None, example=100000)
 
 

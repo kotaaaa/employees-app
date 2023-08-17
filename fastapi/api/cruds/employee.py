@@ -41,6 +41,7 @@ async def get_employees(db: AsyncSession) -> List[Tuple[int, str, str, int]]:
             employee_model.Employee.id,
             employee_model.Employee.first_name,
             employee_model.Employee.last_name,
+            employee_model.Employee.job_title,
             employee_model.Employee.salary,
         )
     )
@@ -87,6 +88,7 @@ async def update_employee(
     """
     original.first_name = employee_create.first_name
     original.last_name = employee_create.last_name
+    original.job_title = employee_create.job_title
     original.salary = employee_create.salary
     db.add(original)
     await db.commit()

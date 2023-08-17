@@ -2,6 +2,7 @@
   <tr v-if="visible" class="modal">
     <td><input v-model="localEmployee.first_name" /></td>
     <td><input v-model="localEmployee.last_name" /></td>
+    <td><input v-model="localEmployee.job_title" /></td>
     <td><input v-model="localEmployee.salary" type="number" /></td>
     <td>
       <button @click="save" class="table-button">Save</button>

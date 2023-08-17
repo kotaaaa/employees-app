@@ -10,6 +10,7 @@
       <tr>
         <th>First name</th>
         <th>Last name</th>
+        <th>Job Title</th>
         <th>Salary</th>
         <th>Action</th>
       </tr>
@@ -27,6 +28,13 @@
             v-model="employee.last_name"
           />
           <span v-else>{{ employee.last_name }}</span>
+        </td>
+        <td>
+          <input
+            v-if="editingEmployeeId === employee.id"
+            v-model="employee.job_title"
+          />
+          <span v-else>{{ employee.job_title }}</span>
         </td>
         <td>
           <input
